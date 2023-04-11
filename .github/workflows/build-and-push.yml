@@ -27,7 +27,7 @@ jobs:
 
     - name: Build with dotnet
       working-directory: ./GA-AAS-DCAPP-WIN
-      run: dotnet build -p GA-AAS-DCAPP-WIN/GA-AAS-DCAPP-WIN.sln --configuration Release --verbosity detailed
+      run: dotnet build --configuration Release 
 
     - name: Publish with dotnet
       run: dotnet publish --configuration Release --output ${{github.workspace}}/app-publish
