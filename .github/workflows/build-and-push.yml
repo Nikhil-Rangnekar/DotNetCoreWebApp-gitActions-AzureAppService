@@ -9,8 +9,8 @@ on:
       - main
 
 env:
-  AZURE_WEBAPP_NAME: my-app-service
-  AZURE_WEBAPP_PACKAGE_PATH: ${{github.workspace}}/my-app-service.zip
+  AZURE_WEBAPP_NAME: gitnikhilDCWebApp
+  AZURE_WEBAPP_PACKAGE_PATH: ${{github.workspace}}/gitnikhilDCWebApp.zip
 
 jobs:
   build-and-deploy:
