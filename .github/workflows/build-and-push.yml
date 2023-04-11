@@ -1,0 +1,42 @@
+name: Deploy to Azure App Service
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  AZURE_WEBAPP_NAME: my-app-service
+  AZURE_WEBAPP_PACKAGE_PATH: ${{github.workspace}}/my-app-service.zip
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0'
+
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+
+    - name: Publish with dotnet
+      run: dotnet publish --configuration Release --output ${{github.workspace}}/app-publish
+
+    - name: Zip publish folder
+      run: zip -r ${{env.AZURE_WEBAPP_PACKAGE_PATH}} ./app-publish
+
+    - name: Deploy to Azure Web Apps
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{env.AZURE_WEBAPP_NAME}}
+        package: ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
+        publish-profile: ${{secrets.AZURE_WEBAPP_PUBLISH_PROFILE}}
