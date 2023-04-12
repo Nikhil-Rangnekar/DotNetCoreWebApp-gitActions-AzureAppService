@@ -31,10 +31,17 @@ jobs:
 
     - name: Publish with dotnet
       working-directory: ./GA-AAS-DCAPP-WIN
-      run: dotnet publish --configuration Release --output ${{github.workspace}}/app-publish
+      run: dotnet publish --configuration Release --output ../wwwroot
 
     - name: Zip publish folder
-      run: zip -r ${{env.AZURE_WEBAPP_PACKAGE_PATH}} ./app-publish
+      run: zip -r ${{env.AZURE_WEBAPP_PACKAGE_PATH}} ../wwwroot
+  
+    #- name: Publish with dotnet
+      #working-directory: ./GA-AAS-DCAPP-WIN
+      #run: dotnet publish --configuration Release --output ${{github.workspace}}/app-publish
+
+    #- name: Zip publish folder
+      #run: zip -r ${{env.AZURE_WEBAPP_PACKAGE_PATH}} ./app-publish
 
     - name: Deploy to Azure Web Apps
       uses: azure/webapps-deploy@v2
